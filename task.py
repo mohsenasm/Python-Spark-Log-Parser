@@ -115,12 +115,11 @@ class Task:
             self.result_serialize_time = data["Task Metrics"]["Result Serialization Time"]
             self.result_size = data["Task Metrics"]["Result Size"]
 
-
     def report(self, indent):
-        pfx = " " * indent
+        pfx = "\t" * indent
         s = pfx + "Task {} (stage: {}, executor: {})\n".format(self.task_id, self.stage_id, self.executor_id)
         indent += 1
-        pfx = " " * indent
+        pfx = "\t" * indent
         s += pfx + "Started at: {}\n".format(datetime.fromtimestamp(self.launch_time / 1000))
         s += pfx + "Run time: {}ms\n".format(int(self.finish_time or 0) - int(self.launch_time or 0))
         assert self.finish_time is not None
@@ -133,7 +132,7 @@ class Task:
         if self.has_metrics:
             s += pfx + "Metrics:\n"
             indent += 1
-            pfx = " " * indent
+            pfx = "\t" * indent
             s += pfx + "Spilled bytes: {}B memory, {}B disk\n".format(self.memory_spilled_bytes, self.disk_spilled_bytes)
             s += pfx + "Executor deserialize time: {}ms\n".format(self.executor_deserialize_time)
             s += pfx + "Executor run time: {}ms\n".format(self.executor_run_time)

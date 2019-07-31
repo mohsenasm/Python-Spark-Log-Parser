@@ -28,10 +28,10 @@ class BlockManager:
         print "BlockManager +1"
 
     def report(self, indent):
-        pfx = " " * indent
+        pfx = "\t" * indent
         s = pfx + "Block manager\n"
         indent += 1
-        pfx = " " * indent
+        pfx = "\t" * indent
         s += pfx + "Executor ID: {}\n".format(self.executor_id)
         s += pfx + "Time added: {}\n".format(datetime.fromtimestamp(self.add_timestamp/1000))
         s += pfx + "Maximum memory: {}\n".format(sizeof_fmt(self.maximum_memory))

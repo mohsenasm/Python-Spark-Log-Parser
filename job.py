@@ -56,11 +56,11 @@ class Job:
         self.end_time = data["Completion Time"]
 
     def report(self, indent):
-        pfx = " " * indent
+        pfx = "\t" * indent
         # indent means 'tab'
         s = pfx + "Job {}\n".format(self.job_id)
         indent += 1
-        pfx = " " * indent
+        pfx = "\t" * indent
         s += pfx + "Submission time: {}\n".format(datetime.fromtimestamp(self.submission_time/1000))
         s += pfx + "Run time: {}ms \n".format(int(self.end_time or 0) - int(self.submission_time))
         s += pfx + "Result: {}\n".format(self.result)
@@ -91,15 +91,22 @@ class Stage:
         self.submission_time = data["Stage Info"]["Submission Time"]
 
     def report(self, indent):
-        pfx = " " * indent
+        pfx = "\t" * indent
         s = pfx + "Stage {} ({})\n".format(self.name, self.stage_id)
         indent += 1
-        pfx = " " * indent
+        pfx = "\t" * indent
         s += pfx + "Number of tasks: {}\n".format(self.task_num)
         s += pfx + "Number of executed tasks: {}\n".format(len(self.tasks))
+        if len(self.tasks) > 0:
+            sum_of_task_execution_times = float(0)
+            for t in self.tasks:
+                sum_of_task_execution_times += int(t.finish_time or 0) - int(t.launch_time or 0)
+
+            s += pfx + "Tasks average completion times: {}ms\n".format(sum_of_task_execution_times / len(self.tasks))
         s += pfx + "Completion time: {}ms\n".format(int(self.completion_time or 0) - int(self.submission_time or 0))
         for rdd in self.RDDs:
             s += rdd.report(indent)
+
         return s
 
 
@@ -136,10 +143,10 @@ class RDD:
         self.replication = rdd_data["Storage Level"]["Replication"]
 
     def report(self, indent):
-        pfx = " " * indent
+        pfx = "\t" * indent
         s = pfx + "RDD {} ({})\n".format(self.name, self.rdd_id)
         indent += 1
-        pfx = " " * indent
+        pfx = "\t" * indent
         s += pfx + "Size: {}B memory {}B disk\n".format(self.memory_size, self.disk_size)
         s += pfx + "Partitions: {}\n".format(self.partitions)
         s += pfx + "Replication: {}\n".format(self.replication)

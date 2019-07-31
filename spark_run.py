@@ -8,6 +8,7 @@ from block_manager import BlockManager
 from task import Task
 from utils import get_json
 
+
 class SparkRun:
     def __init__(self, filename):
         self.filename = filename
@@ -15,7 +16,7 @@ class SparkRun:
         self.executors = {}
         self.jobs = {}
         self.tasks = {}
-        self.block_managers= [] # empty lists.
+        self.block_managers = []  # empty lists.
 
         file = open(filename, "r")
 
@@ -83,9 +84,9 @@ class SparkRun:
         if job_id in self.jobs:
             print("ERROR: Duplicate job ID!")
             return
-        job = Job(data) # that class Job
+        job = Job(data)  # that class Job
         # job = return s
-        self.jobs[job_id] = job # record into the `dict`
+        self.jobs[job_id] = job  # record into the `dict`
 
     def do_SparkListenerStageSubmitted(self, data):
         pass
@@ -112,7 +113,7 @@ class SparkRun:
     def do_SparkListenerStageCompleted(self, data):
         stage_id = data["Stage Info"]["Stage ID"]
         for j in self.jobs.values():
-            for s in j.stages: # class Stage in job.py
+            for s in j.stages:  # class Stage in job.py
                 if s.stage_id == stage_id:
                     s.complete(data)
 
@@ -142,7 +143,7 @@ class SparkRun:
                 self.parsed_data["num_success_tasks"] += 1
 
         # Total average and stddev task run time
-        all_runtimes = [ x.finish_time - x.launch_time for x in self.tasks.values() if x.end_reason == "Success" ]
+        all_runtimes = [x.finish_time - x.launch_time for x in self.tasks.values() if x.end_reason == "Success"]
         all_runtimes = array(all_runtimes)
         self.parsed_data["tot_avg_task_runtime"] = all_runtimes.mean()
         self.parsed_data["tot_std_task_runtime"] = all_runtimes.std()
@@ -154,8 +155,9 @@ class SparkRun:
         s = "Report for '{}' execution {}\n".format(self.parsed_data["app_name"], self.parsed_data["app_id"])
         s += "Spark version: {}\n".format(self.parsed_data["spark_version"])
         s += "Java version: {}\n".format(self.parsed_data["java_version"])
-        s += "Application Start time: {}\n".format(datetime.fromtimestamp(self.parsed_data["app_start_timestamp"]/1000))
-        s += "Application End time: {}\n".format(datetime.fromtimestamp(self.parsed_data["app_end_timestamp"]/1000))
+        s += "Application Start time: {}\n".format(
+            datetime.fromtimestamp(self.parsed_data["app_start_timestamp"] / 1000))
+        s += "Application End time: {}\n".format(datetime.fromtimestamp(self.parsed_data["app_end_timestamp"] / 1000))
         s += "Commandline: {}\n\n".format(self.parsed_data["commandline"])
 
         s += "---> Jobs <---\n"
@@ -169,8 +171,10 @@ class SparkRun:
         s += "Total tasks: {}\n".format(len(self.tasks))
         s += "Successful tasks: {}\n".format(self.parsed_data["num_success_tasks"])
         s += "Failed tasks: {}\n".format(self.parsed_data["num_failed_tasks"])
-        s += "Task average runtime: {} ({} stddev)\n".format(self.parsed_data["tot_avg_task_runtime"], self.parsed_data["tot_std_task_runtime"])
-        s += "Task min/max runtime: {} min, {} max\n".format(self.parsed_data["min_task_runtime"], self.parsed_data["max_task_runtime"])
+        s += "Task average runtime: {} ({} stddev)\n".format(self.parsed_data["tot_avg_task_runtime"],
+                                                             self.parsed_data["tot_std_task_runtime"])
+        s += "Task min/max runtime: {} min, {} max\n".format(self.parsed_data["min_task_runtime"],
+                                                             self.parsed_data["max_task_runtime"])
         for t in self.tasks.values():
             s += t.report(0)
             s += "\n"
@@ -183,16 +187,11 @@ class SparkRun:
             s += "\n"
 
         s += "---> Block managers <---\n"
-        s += "In total, there are {} block managers in {}\n".format(len(self.block_managers), self.parsed_data["app_name"])
+        s += "In total, there are {} block managers in {}\n".format(len(self.block_managers),
+                                                                    self.parsed_data["app_name"])
         for bm in self.block_managers:
             s += bm.report(0)
 
-        sum_of_task_execution_times = 0
-        for t in self.tasks.values():
-            sum_of_task_execution_times += int(t.finish_time or 0) - int(t.launch_time or 0)
-
-        s += "\n"
-        s += "Average tasks execution times = {}ms\n".format(sum_of_task_execution_times/len(self.tasks.values()))
         s += "\n"
 
         print('generate_report is finished.')
