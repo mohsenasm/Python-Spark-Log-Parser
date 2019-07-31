@@ -13,303 +13,369 @@ Job 0
 	Run time: 3022ms 
 	Result: JobSucceeded
 	Number of stages: 1
-	Stage run at ThreadPoolExecutor.java:1149 (0)
+	Stage run at ThreadPoolExecutor.java:1149 (id=0)
 		Number of tasks: 1
 		Number of executed tasks: 1
 		Tasks average completion times: 2304.0ms
 		Completion time: 2767ms
-		RDD MapPartitionsRDD (8)
+		RDD MapPartitionsRDD (id=8)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD MapPartitionsRDD (3)
+			Parent IDs: [3]
+		RDD MapPartitionsRDD (id=3)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD FileScanRDD (2)
+			Parent IDs: [2]
+		RDD FileScanRDD (id=2)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
+			Parent IDs: []
+		Parent IDs: []
 
 Job 2
 	Submission time: 2019-07-23 18:12:56.719000
 	Run time: 3279ms 
 	Result: JobSucceeded
 	Number of stages: 1
-	Stage run at ThreadPoolExecutor.java:1149 (1)
+	Stage run at ThreadPoolExecutor.java:1149 (id=1)
 		Number of tasks: 1
 		Number of executed tasks: 1
 		Tasks average completion times: 643.0ms
 		Completion time: 3269ms
-		RDD MapPartitionsRDD (7)
+		RDD MapPartitionsRDD (id=7)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD MapPartitionsRDD (5)
+			Parent IDs: [5]
+		RDD MapPartitionsRDD (id=5)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD FileScanRDD (1)
+			Parent IDs: [1]
+		RDD FileScanRDD (id=1)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
+			Parent IDs: []
+		Parent IDs: []
 
 Job 1
 	Submission time: 2019-07-23 18:12:56.880000
 	Run time: 2479ms 
 	Result: JobSucceeded
 	Number of stages: 1
-	Stage run at ThreadPoolExecutor.java:1149 (2)
+	Stage run at ThreadPoolExecutor.java:1149 (id=2)
 		Number of tasks: 1
 		Number of executed tasks: 1
 		Tasks average completion times: 275.0ms
 		Completion time: 2459ms
-		RDD MapPartitionsRDD (6)
+		RDD MapPartitionsRDD (id=6)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD MapPartitionsRDD (4)
+			Parent IDs: [4]
+		RDD MapPartitionsRDD (id=4)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD FileScanRDD (0)
+			Parent IDs: [0]
+		RDD FileScanRDD (id=0)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
+			Parent IDs: []
+		Parent IDs: []
 
 Job 3
 	Submission time: 2019-07-23 18:13:03.114000
 	Run time: 26364ms 
 	Result: JobSucceeded
 	Number of stages: 4
-	Stage processCmd at CliDriver.java:376 (5)
+	Stage processCmd at CliDriver.java:376 (id=5)
 		Number of tasks: 200
 		Number of executed tasks: 200
 		Tasks average completion times: 29.795ms
 		Completion time: 14493ms
-		RDD MapPartitionsRDD (22)
+		RDD MapPartitionsRDD (id=22)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (21)
+			Parent IDs: [21]
+		RDD MapPartitionsRDD (id=21)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ShuffledRowRDD (16)
+			Parent IDs: [16]
+		RDD ShuffledRowRDD (id=16)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-	Stage processCmd at CliDriver.java:376 (6)
+			Parent IDs: [15]
+		Parent IDs: [3]
+	Stage processCmd at CliDriver.java:376 (id=6)
 		Number of tasks: 200
 		Number of executed tasks: 200
 		Tasks average completion times: 30.395ms
 		Completion time: 5838ms
-		RDD MapPartitionsRDD (29)
+		RDD MapPartitionsRDD (id=29)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (24)
+			Parent IDs: [28]
+		RDD MapPartitionsRDD (id=24)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (26)
+			Parent IDs: [23]
+		RDD MapPartitionsRDD (id=26)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (20)
+			Parent IDs: [25]
+		RDD MapPartitionsRDD (id=20)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (28)
+			Parent IDs: [19]
+		RDD MapPartitionsRDD (id=28)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (27)
+			Parent IDs: [27]
+		RDD MapPartitionsRDD (id=27)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ZippedPartitionsRDD2 (25)
+			Parent IDs: [26]
+		RDD ZippedPartitionsRDD2 (id=25)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ShuffledRowRDD (23)
+			Parent IDs: [20, 24]
+		RDD ShuffledRowRDD (id=23)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ShuffledRowRDD (19)
+			Parent IDs: [22]
+		RDD ShuffledRowRDD (id=19)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-	Stage processCmd at CliDriver.java:376 (3)
+			Parent IDs: [18]
+		Parent IDs: [5, 4]
+	Stage processCmd at CliDriver.java:376 (id=3)
 		Number of tasks: 2
 		Number of executed tasks: 2
 		Tasks average completion times: 2888.0ms
 		Completion time: 5838ms
-		RDD MapPartitionsRDD (15)
+		RDD MapPartitionsRDD (id=15)
 			Size: 0B memory 0B disk
 			Partitions: 2
 			Replication: 1
-		RDD MapPartitionsRDD (12)
+			Parent IDs: [14]
+		RDD MapPartitionsRDD (id=12)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD UnionRDD (13)
+			Parent IDs: [11]
+		RDD UnionRDD (id=13)
 			Size: 0B memory 0B disk
 			Partitions: 2
 			Replication: 1
-		RDD MapPartitionsRDD (10)
+			Parent IDs: [10, 12]
+		RDD MapPartitionsRDD (id=10)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD FileScanRDD (11)
+			Parent IDs: [9]
+		RDD FileScanRDD (id=11)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD MapPartitionsRDD (14)
+			Parent IDs: []
+		RDD MapPartitionsRDD (id=14)
 			Size: 0B memory 0B disk
 			Partitions: 2
 			Replication: 1
-		RDD FileScanRDD (9)
+			Parent IDs: [13]
+		RDD FileScanRDD (id=9)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-	Stage processCmd at CliDriver.java:376 (4)
+			Parent IDs: []
+		Parent IDs: []
+	Stage processCmd at CliDriver.java:376 (id=4)
 		Number of tasks: 200
 		Number of executed tasks: 200
 		Tasks average completion times: 45.675ms
 		Completion time: 8909ms
-		RDD MapPartitionsRDD (18)
+		RDD MapPartitionsRDD (id=18)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ShuffledRowRDD (16)
+			Parent IDs: [17]
+		RDD ShuffledRowRDD (id=16)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (17)
+			Parent IDs: [15]
+		RDD MapPartitionsRDD (id=17)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
+			Parent IDs: [16]
+		Parent IDs: [3]
 
 Job 4
 	Submission time: 2019-07-23 18:13:29.615000
 	Run time: 7602ms 
 	Result: JobSucceeded
 	Number of stages: 5
-	Stage processCmd at CliDriver.java:376 (9)
+	Stage processCmd at CliDriver.java:376 (id=9)
 		Number of tasks: 200
 		Number of executed tasks: 0
 		Completion time: 0ms
-		RDD MapPartitionsRDD (18)
+		RDD MapPartitionsRDD (id=18)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ShuffledRowRDD (16)
+			Parent IDs: [17]
+		RDD ShuffledRowRDD (id=16)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (17)
+			Parent IDs: [15]
+		RDD MapPartitionsRDD (id=17)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-	Stage processCmd at CliDriver.java:376 (10)
+			Parent IDs: [16]
+		Parent IDs: [7]
+	Stage processCmd at CliDriver.java:376 (id=10)
 		Number of tasks: 200
 		Number of executed tasks: 200
 		Tasks average completion times: 33.16ms
 		Completion time: 6296ms
-		RDD MapPartitionsRDD (30)
+		RDD MapPartitionsRDD (id=30)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (24)
+			Parent IDs: [26]
+		RDD MapPartitionsRDD (id=24)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (26)
+			Parent IDs: [23]
+		RDD MapPartitionsRDD (id=26)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (20)
+			Parent IDs: [25]
+		RDD MapPartitionsRDD (id=20)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ZippedPartitionsRDD2 (25)
+			Parent IDs: [19]
+		RDD ZippedPartitionsRDD2 (id=25)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ShuffledRowRDD (23)
+			Parent IDs: [20, 24]
+		RDD ShuffledRowRDD (id=23)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ShuffledRowRDD (19)
+			Parent IDs: [22]
+		RDD ShuffledRowRDD (id=19)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-	Stage processCmd at CliDriver.java:376 (7)
+			Parent IDs: [18]
+		Parent IDs: [9, 8]
+	Stage processCmd at CliDriver.java:376 (id=7)
 		Number of tasks: 2
 		Number of executed tasks: 0
 		Completion time: 0ms
-		RDD MapPartitionsRDD (15)
+		RDD MapPartitionsRDD (id=15)
 			Size: 0B memory 0B disk
 			Partitions: 2
 			Replication: 1
-		RDD MapPartitionsRDD (12)
+			Parent IDs: [14]
+		RDD MapPartitionsRDD (id=12)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD UnionRDD (13)
+			Parent IDs: [11]
+		RDD UnionRDD (id=13)
 			Size: 0B memory 0B disk
 			Partitions: 2
 			Replication: 1
-		RDD MapPartitionsRDD (10)
+			Parent IDs: [10, 12]
+		RDD MapPartitionsRDD (id=10)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD FileScanRDD (11)
+			Parent IDs: [9]
+		RDD FileScanRDD (id=11)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-		RDD MapPartitionsRDD (14)
+			Parent IDs: []
+		RDD MapPartitionsRDD (id=14)
 			Size: 0B memory 0B disk
 			Partitions: 2
 			Replication: 1
-		RDD FileScanRDD (9)
+			Parent IDs: [13]
+		RDD FileScanRDD (id=9)
 			Size: 0B memory 0B disk
 			Partitions: 1
 			Replication: 1
-	Stage processCmd at CliDriver.java:376 (11)
+			Parent IDs: []
+		Parent IDs: []
+	Stage processCmd at CliDriver.java:376 (id=11)
 		Number of tasks: 53
 		Number of executed tasks: 53
 		Tasks average completion times: 24.77358490566038ms
 		Completion time: 1254ms
-		RDD MapPartitionsRDD (33)
+		RDD MapPartitionsRDD (id=33)
 			Size: 0B memory 0B disk
 			Partitions: 53
 			Replication: 1
-		RDD MapPartitionsRDD (32)
+			Parent IDs: [32]
+		RDD MapPartitionsRDD (id=32)
 			Size: 0B memory 0B disk
 			Partitions: 53
 			Replication: 1
-		RDD ShuffledRowRDD (31)
+			Parent IDs: [31]
+		RDD ShuffledRowRDD (id=31)
 			Size: 0B memory 0B disk
 			Partitions: 53
 			Replication: 1
-	Stage processCmd at CliDriver.java:376 (8)
+			Parent IDs: [30]
+		Parent IDs: [10]
+	Stage processCmd at CliDriver.java:376 (id=8)
 		Number of tasks: 200
 		Number of executed tasks: 0
 		Completion time: 0ms
-		RDD MapPartitionsRDD (22)
+		RDD MapPartitionsRDD (id=22)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD MapPartitionsRDD (21)
+			Parent IDs: [21]
+		RDD MapPartitionsRDD (id=21)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
-		RDD ShuffledRowRDD (16)
+			Parent IDs: [16]
+		RDD ShuffledRowRDD (id=16)
 			Size: 0B memory 0B disk
 			Partitions: 200
 			Replication: 1
+			Parent IDs: [15]
+		Parent IDs: [7]
 
 ---> Tasks <---
 Total tasks: 858

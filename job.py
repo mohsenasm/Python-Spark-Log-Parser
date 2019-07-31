@@ -82,6 +82,7 @@ class Stage:
             # class RDD is needed
         self.name = stage_data["Stage Name"]
         self.tasks = []
+        self.parent_ids = stage_data["Parent IDs"] if "Parent IDs" in stage_data else []
 
         self.completion_time = None
         self.submission_time = None
@@ -92,7 +93,7 @@ class Stage:
 
     def report(self, indent):
         pfx = "\t" * indent
-        s = pfx + "Stage {} ({})\n".format(self.name, self.stage_id)
+        s = pfx + "Stage {} (id={})\n".format(self.name, self.stage_id)
         indent += 1
         pfx = "\t" * indent
         s += pfx + "Number of tasks: {}\n".format(self.task_num)
@@ -106,6 +107,7 @@ class Stage:
         s += pfx + "Completion time: {}ms\n".format(int(self.completion_time or 0) - int(self.submission_time or 0))
         for rdd in self.RDDs:
             s += rdd.report(indent)
+        s += pfx + "Parent IDs: {}\n".format(self.parent_ids)
 
         return s
 
@@ -141,13 +143,15 @@ class RDD:
         self.name = rdd_data["Name"]
         self.partitions = rdd_data["Number of Partitions"]
         self.replication = rdd_data["Storage Level"]["Replication"]
+        self.parent_ids = rdd_data["Parent IDs"] if "Parent IDs" in rdd_data else []
 
     def report(self, indent):
         pfx = "\t" * indent
-        s = pfx + "RDD {} ({})\n".format(self.name, self.rdd_id)
+        s = pfx + "RDD {} (id={})\n".format(self.name, self.rdd_id)
         indent += 1
         pfx = "\t" * indent
         s += pfx + "Size: {}B memory {}B disk\n".format(self.memory_size, self.disk_size)
         s += pfx + "Partitions: {}\n".format(self.partitions)
         s += pfx + "Replication: {}\n".format(self.replication)
+        s += pfx + "Parent IDs: {}\n".format(self.parent_ids)
         return s
