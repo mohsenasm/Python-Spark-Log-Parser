@@ -1,5 +1,9 @@
 # Spark-Log-Parser
 
+## 0. Disclaimer
+
+This is a work-in-progress project. (WIP)
+
 ## 1. Set up Spark/conf with log-enable
 
 According to the [official gudience](https://spark.apache.org/docs/latest/configuration.html), you can enable Spark to log the detailed execution infomation in `spark/confspark-defaults.conf` file.
