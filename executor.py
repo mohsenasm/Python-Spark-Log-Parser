@@ -44,7 +44,7 @@ class Executor:
 
         self.remove_reason = None
         self.remove_timestamp = None
-        print "Executor +1"
+        print("Executor +1")
 
     def add_block_manager(self, bm):
         self.block_managers.append(bm)

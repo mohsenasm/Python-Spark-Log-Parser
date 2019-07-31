@@ -23,7 +23,7 @@ def parse_dir(path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 1:
-        print "Usage python <main.py> <log_file>"
+        print("Usage python3 <main.py> <log_file>")
     else:
         PATH = os.path.join(sys.argv[1])
 

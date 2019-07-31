@@ -25,7 +25,7 @@ class BlockManager:
         self.maximum_memory = data["Maximum Memory"]
         self.add_timestamp = data["Timestamp"]
         self.executor_id = data["Block Manager ID"]["Executor ID"]
-        print "BlockManager +1"
+        print("BlockManager +1")
 
     def report(self, indent):
         pfx = "\t" * indent
