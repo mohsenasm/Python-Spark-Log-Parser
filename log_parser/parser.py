@@ -91,6 +91,8 @@ class LogParser:
 
     def process(self):
         with open(self.filename, "r") as log_file:
+            unsupported_event_types = set()
+
             for line in log_file:
                 json_data = get_json(line)
                 event_type = json_data["Event"]
@@ -125,7 +127,11 @@ class LogParser:
                 elif event_type == "SparkListenerJobEnd":
                     self.do_SparkListenerJobEnd(json_data)
                 else:
-                    print("WARNING: unknown event type: " + event_type)
+                    # print("WARNING: unknown event type: " + event_type)
+                    unsupported_event_types.add(event_type)
+
+            if len(unsupported_event_types) > 0:
+                print("WARNING: unknown event types:\n\t{}".format("\n\t".join(unsupported_event_types)))
 
         # Link block managers and executors
         for bm in self.block_managers:

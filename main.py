@@ -11,8 +11,8 @@ if __name__ == "__main__":
         log_parser = LogParser(path)
         log_parser.process()
 
-        # report = log_parser.generate_report()
-        # with open(os.path.expanduser("report.txt"), "w") as report_file:
-        #     report_file.write(report)
+        report = log_parser.generate_report()
+        with open(os.path.expanduser("report.txt"), "w") as report_file:
+            report_file.write(report)
 
         print(f"Log processing of application '{log_parser.get_app_name()}' completed.")

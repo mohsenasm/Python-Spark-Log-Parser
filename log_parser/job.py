@@ -83,7 +83,7 @@ class Stage:
 
     def report(self, indent):
         pfx = "\t" * indent
-        s = pfx + "Stage {} (id={})\n".format(self.name, self.stage_id)
+        s = pfx + "Stage '{}' (id={})\n".format(self.name, self.stage_id)
         indent += 1
         pfx = "\t" * indent
         s += pfx + "Number of tasks: {}\n".format(self.task_num)
@@ -137,7 +137,7 @@ class RDD:
 
     def report(self, indent):
         pfx = "\t" * indent
-        s = pfx + "RDD {} (id={})\n".format(self.name, self.rdd_id)
+        s = pfx + "RDD '{}' (id={})\n".format(self.name, self.rdd_id)
         indent += 1
         pfx = "\t" * indent
         s += pfx + "Size: {}B memory {}B disk\n".format(self.memory_size, self.disk_size)
