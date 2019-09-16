@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 from numpy import array
+from graphviz import Digraph
 
 from log_parser.block_manager import BlockManager
 from log_parser.executor import Executor
@@ -211,3 +212,20 @@ class LogParser:
         # print('generate_report is finished.')
 
         return s
+
+    def save_plot_of_stages_dag(self, filename, view=True):
+        dag = Digraph()
+
+        for j in self.jobs.values():
+            for s in j.stages:
+                assert type(s.stage_id) == int
+                dag.node(str(s.stage_id), str(s.stage_id))
+
+        for j in self.jobs.values():
+            for s in j.stages:
+                for parent in s.parent_ids:
+                    assert type(parent) == int
+                    assert type(s.stage_id) == int
+                    dag.edge(str(parent), str(s.stage_id))
+
+        dag.render(filename, view=view)

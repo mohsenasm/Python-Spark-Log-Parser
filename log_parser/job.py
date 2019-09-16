@@ -21,9 +21,11 @@ class Job:
 
         self.job_id = start_data["Job ID"]
         self.stages = []
+
+        self.submission_time = start_data["Submission Time"]
+
         for stage_data in start_data["Stage Infos"]:
             self.stages.append(Stage(stage_data))   # class Stage
-        self.submission_time = start_data["Submission Time"]
 
         self.result = None
         self.end_time = None
@@ -64,15 +66,16 @@ class Job:
 class Stage:
     def __init__(self, stage_data):
         self.stage_id = stage_data["Stage ID"]
+        self.name = stage_data["Stage Name"]
+        self.parent_ids = stage_data["Parent IDs"] if "Parent IDs" in stage_data else []
+
         self.details = stage_data["Details"]
         self.task_num = stage_data["Number of Tasks"]
         self.RDDs = []
+        self.tasks = []
+
         for rdd_data in stage_data["RDD Info"]:
             self.RDDs.append(RDD(rdd_data))
-            # class RDD is needed
-        self.name = stage_data["Stage Name"]
-        self.tasks = []
-        self.parent_ids = stage_data["Parent IDs"] if "Parent IDs" in stage_data else []
 
         self.completion_time = None
         self.submission_time = None
@@ -128,12 +131,13 @@ class RDD:
 
     def __init__(self, rdd_data):
         self.rdd_id = rdd_data["RDD ID"]
+        self.name = rdd_data["Name"]
+        self.parent_ids = rdd_data["Parent IDs"] if "Parent IDs" in rdd_data else []
+
         self.disk_size = rdd_data["Disk Size"]
         self.memory_size = rdd_data["Memory Size"]
-        self.name = rdd_data["Name"]
         self.partitions = rdd_data["Number of Partitions"]
         self.replication = rdd_data["Storage Level"]["Replication"]
-        self.parent_ids = rdd_data["Parent IDs"] if "Parent IDs" in rdd_data else []
 
     def report(self, indent):
         pfx = "\t" * indent
@@ -173,6 +177,7 @@ class Task:
         self.task_id = data["Task Info"]["Task ID"]
         self.stage_id = data["Stage ID"]
         self.executor_id = data["Task Info"]["Executor ID"]
+
         self.launch_time = data["Task Info"]["Launch Time"]
         self.locality = data["Task Info"]["Locality"]
         self.speculative = data["Task Info"]["Speculative"]
