@@ -5,7 +5,7 @@
 # also recall self.block_manager is a list []
 from datetime import datetime
 
-from utils import sizeof_fmt
+from log_parser.utils import sizeof_fmt
 
 
 class BlockManager:
@@ -25,7 +25,7 @@ class BlockManager:
         self.maximum_memory = data["Maximum Memory"]
         self.add_timestamp = data["Timestamp"]
         self.executor_id = data["Block Manager ID"]["Executor ID"]
-        print("BlockManager +1")
+        # print("BlockManager +1")
 
     def report(self, indent):
         pfx = "\t" * indent

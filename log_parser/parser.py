@@ -1,60 +1,23 @@
 from datetime import datetime
 
-from numpy import *
+from log_parser.block_manager import BlockManager
+from log_parser.executor import Executor
+from log_parser.job import Job
+from numpy import array
+from log_parser.utils import get_json
 
-from executor import Executor
-from job import Job
-from block_manager import BlockManager
-from task import Task
-from utils import get_json
+from log_parser.task import Task
 
 
-class SparkRun:
+class LogParser:
     def __init__(self, filename):
         self.filename = filename
         self.parsed_data = {}  # empty dicts.
+        self.block_managers = []  # empty lists.
+
         self.executors = {}
         self.jobs = {}
         self.tasks = {}
-        self.block_managers = []  # empty lists.
-
-        file = open(filename, "r")
-
-        for line in file:
-            json_data = get_json(line)
-            event_type = json_data["Event"]
-
-            # 13 event types
-            if event_type == "SparkListenerLogStart":
-                self.do_SparkListenerLogStart(json_data)
-            elif event_type == "SparkListenerBlockManagerAdded":
-                self.do_SparkListenerBlockManagerAdded(json_data)
-            elif event_type == "SparkListenerEnvironmentUpdate":
-                self.do_SparkListenerEnvironmentUpdate(json_data)
-            elif event_type == "SparkListenerApplicationStart":
-                self.do_SparkListenerApplicationStart(json_data)
-            elif event_type == "SparkListenerApplicationEnd":
-                self.do_SparkListenerApplicationEnd(json_data)
-            elif event_type == "SparkListenerJobStart":
-                self.do_SparkListenerJobStart(json_data)
-            elif event_type == "SparkListenerStageSubmitted":
-                self.do_SparkListenerStageSubmitted(json_data)
-            elif event_type == "SparkListenerExecutorAdded":
-                self.do_SparkListenerExecutorAdded(json_data)
-            elif event_type == "SparkListenerTaskStart":
-                self.do_SparkListenerTaskStart(json_data)
-            elif event_type == "SparkListenerTaskEnd":
-                self.do_SparkListenerTaskEnd(json_data)
-            elif event_type == "SparkListenerExecutorRemoved":
-                self.do_SparkListenerExecutorRemoved(json_data)
-            elif event_type == "SparkListenerBlockManagerRemoved":
-                self.do_SparkListenerBlockManagerRemoved(json_data)
-            elif event_type == "SparkListenerStageCompleted":
-                self.do_SparkListenerStageCompleted(json_data)
-            elif event_type == "SparkListenerJobEnd":
-                self.do_SparkListenerJobEnd(json_data)
-            else:
-                print("WARNING: unknown event type: " + event_type)
 
     def do_SparkListenerLogStart(self, data):
         self.parsed_data["spark_version"] = data["Spark Version"]
@@ -121,7 +84,44 @@ class SparkRun:
         job_id = data["Job ID"]
         self.jobs[job_id].complete(data)
 
-    def correlate(self):
+    def process(self):
+        with open(self.filename, "r") as log_file:
+            for line in log_file:
+                json_data = get_json(line)
+                event_type = json_data["Event"]
+
+                # 13 event types
+                if event_type == "SparkListenerLogStart":
+                    self.do_SparkListenerLogStart(json_data)
+                elif event_type == "SparkListenerBlockManagerAdded":
+                    self.do_SparkListenerBlockManagerAdded(json_data)
+                elif event_type == "SparkListenerEnvironmentUpdate":
+                    self.do_SparkListenerEnvironmentUpdate(json_data)
+                elif event_type == "SparkListenerApplicationStart":
+                    self.do_SparkListenerApplicationStart(json_data)
+                elif event_type == "SparkListenerApplicationEnd":
+                    self.do_SparkListenerApplicationEnd(json_data)
+                elif event_type == "SparkListenerJobStart":
+                    self.do_SparkListenerJobStart(json_data)
+                elif event_type == "SparkListenerStageSubmitted":
+                    self.do_SparkListenerStageSubmitted(json_data)
+                elif event_type == "SparkListenerExecutorAdded":
+                    self.do_SparkListenerExecutorAdded(json_data)
+                elif event_type == "SparkListenerTaskStart":
+                    self.do_SparkListenerTaskStart(json_data)
+                elif event_type == "SparkListenerTaskEnd":
+                    self.do_SparkListenerTaskEnd(json_data)
+                elif event_type == "SparkListenerExecutorRemoved":
+                    self.do_SparkListenerExecutorRemoved(json_data)
+                elif event_type == "SparkListenerBlockManagerRemoved":
+                    self.do_SparkListenerBlockManagerRemoved(json_data)
+                elif event_type == "SparkListenerStageCompleted":
+                    self.do_SparkListenerStageCompleted(json_data)
+                elif event_type == "SparkListenerJobEnd":
+                    self.do_SparkListenerJobEnd(json_data)
+                else:
+                    print("WARNING: unknown event type: " + event_type)
+
         # Link block managers and executors
         for bm in self.block_managers:
             if bm.executor_id != "driver":
@@ -149,6 +149,9 @@ class SparkRun:
         self.parsed_data["tot_std_task_runtime"] = all_runtimes.std()
         self.parsed_data["min_task_runtime"] = all_runtimes.min()
         self.parsed_data["max_task_runtime"] = all_runtimes.max()
+
+    def get_app_name(self):
+        return self.parsed_data["app_name"]
 
     def generate_report(self):
         # return s
@@ -194,9 +197,6 @@ class SparkRun:
 
         s += "\n"
 
-        print('generate_report is finished.')
+        # print('generate_report is finished.')
 
         return s
-
-    def get_app_name(self):
-        return self.parsed_data["app_id"]
