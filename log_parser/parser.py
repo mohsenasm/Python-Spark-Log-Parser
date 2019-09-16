@@ -213,7 +213,7 @@ class LogParser:
 
         return s
 
-    def save_plot_of_stages_dag(self, filename, view=True):
+    def save_plot_of_stages_dag(self, filename, view=False):
         dag = Digraph()
 
         for j in self.jobs.values():
