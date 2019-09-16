@@ -1,11 +1,12 @@
-# self.executors[bm.executor_id].block_managers.append(bm)
-
-# self.executors[t.executor_id].task.append(t)
-
-# also recall self.block_manager is a list []
 from datetime import datetime
 
-from log_parser.utils import sizeof_fmt
+
+def sizeof_fmt(num, suffix='B'):
+    for unit in ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi']:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f%s%s" % (num, 'Yi', suffix)
 
 
 class BlockManager:

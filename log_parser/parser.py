@@ -1,12 +1,17 @@
+import json
 from datetime import datetime
+from numpy import array
 
 from log_parser.block_manager import BlockManager
 from log_parser.executor import Executor
 from log_parser.job import Job
-from numpy import array
-from log_parser.utils import get_json
+from log_parser.job import Task
 
-from log_parser.task import Task
+
+def get_json(line):
+    # Need to first strip the trailing newline, and then escape newlines (which can appear
+    # in the middle of some of the JSON) so that JSON library doesn't barf.
+    return json.loads(line.strip("\n").replace("\n", "\\n"))
 
 
 class LogParser:
