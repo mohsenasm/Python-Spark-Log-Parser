@@ -165,6 +165,9 @@ class LogParser:
     def get_app_name(self):
         return self.parsed_data["app_name"]
 
+    def get_app_id(self):
+        return self.parsed_data["app_id"]
+
     def generate_report(self):
         # return s
         s = "Report for '{}' execution {}\n".format(self.parsed_data["app_name"], self.parsed_data["app_id"])

@@ -10,7 +10,8 @@ def parse_application_log(file_path):
     log_parser = LogParser(file_path)
     log_parser.process()
     name = log_parser.get_app_name()
-    safe_name = slugify(name)
+    id = log_parser.get_app_id()
+    safe_name = slugify(name+"_"+id)
     if len(safe_name) == 0:
         safe_name = file_path.split("/")[-1]
 
