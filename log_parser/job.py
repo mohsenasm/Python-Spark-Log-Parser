@@ -92,11 +92,7 @@ class Stage:
         s += pfx + "Number of tasks: {}\n".format(self.task_num)
         s += pfx + "Number of executed tasks: {}\n".format(len(self.tasks))
         if len(self.tasks) > 0:
-            sum_of_task_execution_times = float(0)
-            for t in self.tasks:
-                sum_of_task_execution_times += int(t.finish_time or 0) - int(t.launch_time or 0)
-
-            s += pfx + "Tasks average completion times: {}ms\n".format(sum_of_task_execution_times / len(self.tasks))
+            s += pfx + "Tasks average completion times: {}ms\n".format(self.get_tasks_average_completion_times())
         s += pfx + "Completion time: {}ms\n".format(int(self.completion_time or 0) - int(self.submission_time or 0))
         for rdd in self.RDDs:
             s += rdd.report(indent)
@@ -104,6 +100,14 @@ class Stage:
 
         return s
 
+    def get_tasks_average_completion_times(self):
+        if len(self.tasks) > 0:
+            sum_of_task_execution_times = float(0)
+            for t in self.tasks:
+                sum_of_task_execution_times += int(t.finish_time or 0) - int(t.launch_time or 0)
+
+            return sum_of_task_execution_times / len(self.tasks)
+        return 0
 
 class RDD:
     """

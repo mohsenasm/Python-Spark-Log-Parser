@@ -16,7 +16,7 @@ def get_json(line):
 
 
 class LogParser:
-    def __init__(self, filename):
+    def __init__(self, filename, is_logging_enable=False):
         self.filename = filename
         self.parsed_data = {}  # empty dicts.
         self.block_managers = []  # empty lists.
@@ -24,6 +24,8 @@ class LogParser:
         self.executors = {}
         self.jobs = {}
         self.tasks = {}
+
+        self.is_logging_enable = is_logging_enable
 
     def do_SparkListenerLogStart(self, data):
         self.parsed_data["spark_version"] = data["Spark Version"]
@@ -131,7 +133,7 @@ class LogParser:
                     # print("WARNING: unknown event type: " + event_type)
                     unsupported_event_types.add(event_type)
 
-            if len(unsupported_event_types) > 0:
+            if len(unsupported_event_types) > 0 and self.is_logging_enable:
                 print("WARNING: unknown event types:\n\t{}".format("\n\t".join(unsupported_event_types)))
 
         # Link block managers and executors
