@@ -1,10 +1,13 @@
-import numpy
-from sklearn.linear_model import LinearRegression
-from collections import defaultdict
-import matplotlib.pyplot as plt
-from matplotlib import gridspec
 import math
 import operator
+from collections import defaultdict
+
+import numpy
+import matplotlib.pyplot as plt
+from matplotlib import gridspec
+
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 
 min_threshold_on_max_stage_time = 250 # ms
 number_of_data_for_learn = 5
@@ -31,19 +34,33 @@ def plot_all_stages(dict_of_apps_for_different_scales, name_prefix=""):
         pairs = sorted(stages_times[stage_id].items(), key=operator.itemgetter(0))
         scales = numpy.array(
             [p[0] for p in pairs]
-        ).reshape(-1, 1)
+        ).reshape((-1, 1))
         times = numpy.array(
             [p[1] for p in pairs]
-        ).reshape(-1, 1)
-
-        linear_regressor = LinearRegression()
-        linear_regressor.fit(scales[:number_of_data_for_learn], times[:number_of_data_for_learn])
-        times_predicted = linear_regressor.predict(scales)
+        )
+        scales_for_learn = scales[:number_of_data_for_learn]
+        times_for_learn = times[:number_of_data_for_learn]
 
         ax = fig.add_subplot(gs[index])
         ax.plot(scales[number_of_data_for_learn-1:], times[number_of_data_for_learn-1:], ".-", color="blue")
         ax.plot(scales[:number_of_data_for_learn], times[:number_of_data_for_learn], ".-", color="green")
-        ax.plot(scales, times_predicted, color="red")
+
+        linear_regressor = LinearRegression()
+        linear_regressor.fit(scales_for_learn, times_for_learn)
+        times_linear_predicted = linear_regressor.predict(scales)
+
+        ax.plot(scales, times_linear_predicted, color="red")
+
+        polynomial_transform_of_scales = \
+            PolynomialFeatures(degree=2, include_bias=False).fit_transform(scales) # , include_bias=True
+        polynomial_transform_of_scales_for_learn = \
+            PolynomialFeatures(degree=2, include_bias=False).fit_transform(scales_for_learn)
+        polynomial_regressor = LinearRegression() # fit_intercept=False
+        polynomial_regressor.fit(polynomial_transform_of_scales_for_learn, times_for_learn)
+        times_polynomial_predicted = polynomial_regressor.predict(polynomial_transform_of_scales)
+
+        ax.plot(scales, times_polynomial_predicted, "--", color="purple")
+
         ax.set_title(f"stage_{stage_id}")
 
     fig.suptitle(name_prefix)

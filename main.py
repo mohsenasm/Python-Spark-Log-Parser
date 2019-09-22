@@ -51,5 +51,6 @@ if __name__ == "__main__":
         print("Usage: python3 <main.py> <log_dir>")
     else:
         apps = parse_application_log_from_directory(os.path.join(sys.argv[1]))
+        plot_all_stages(apps[26], "query_26")
         plot_all_stages(apps[52], "query_52")
 
