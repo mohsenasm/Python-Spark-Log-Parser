@@ -109,6 +109,9 @@ class Stage:
             return sum_of_task_execution_times / len(self.tasks)
         return 0
 
+    def get_completion_time(self):
+        return int(self.completion_time or 0) - int(self.submission_time or 0)
+
 class RDD:
     """
     "RDD Info": [

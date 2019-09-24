@@ -9,7 +9,7 @@ from matplotlib import gridspec
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 
-min_threshold_on_max_stage_time = 250 # ms
+min_threshold_on_max_stage_time = 0 # ms
 number_of_data_for_learn = 5
 
 def plot_all_stages(dict_of_apps_for_different_scales, name_prefix=""):
@@ -19,7 +19,7 @@ def plot_all_stages(dict_of_apps_for_different_scales, name_prefix=""):
     for scale in app_dict:
         for job in app_dict[scale].jobs.values():
             for stage in job.stages:
-                stages_times[stage.stage_id][scale] = stage.get_tasks_average_completion_times()
+                stages_times[stage.stage_id][scale] = stage.get_completion_time()
 
     for stage_id in list(stages_times.keys()):
         if max(stages_times[stage_id].values()) < min_threshold_on_max_stage_time:
