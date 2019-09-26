@@ -14,8 +14,13 @@ def parse_application_log(file_path, all_apps):
     try:
         log_parser.process()
     except KeyError as e:
-        print(f"error on parse {file_path}, {e}")
-        return
+        name = None
+        try:
+            name = log_parser.process_name_only()
+        finally:
+            print(f"error on parse {f'({name}) ' if name else ''}{file_path}, {e}")
+            return
+
     name = log_parser.get_app_name()
     id = log_parser.get_app_id()
     safe_name = slugify(name+"_"+id)

@@ -92,6 +92,15 @@ class LogParser:
         job_id = data["Job ID"]
         self.jobs[job_id].complete(data)
 
+    def process_name_only(self):
+        with open(self.filename, "r") as log_file:
+            for line in log_file:
+                json_data = get_json(line)
+                event_type = json_data["Event"]
+
+                if event_type == "SparkListenerEnvironmentUpdate":
+                    self.do_SparkListenerEnvironmentUpdate(json_data)
+
     def process(self):
         with open(self.filename, "r") as log_file:
             unsupported_event_types = set()
