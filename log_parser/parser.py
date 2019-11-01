@@ -233,7 +233,7 @@ class LogParser:
         for j in self.jobs.values():
             for s in j.stages:
                 assert type(s.stage_id) == int
-                dag.node(str(s.stage_id), str(s.stage_id))
+                dag.node(str(s.stage_id), f"{s.stage_id} ({s.get_completion_time()}ms, j={j.job_id})")
 
         for j in self.jobs.values():
             for s in j.stages:

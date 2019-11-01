@@ -54,6 +54,7 @@ class Job:
         indent += 1
         pfx = "\t" * indent
         s += pfx + "Submission time: {}\n".format(datetime.fromtimestamp(self.submission_time/1000))
+        s += pfx + "End time: {}\n".format(datetime.fromtimestamp(self.end_time / 1000))
         s += pfx + "Run time: {}ms \n".format(int(self.end_time or 0) - int(self.submission_time))
         s += pfx + "Result: {}\n".format(self.result)
         s += pfx + "Number of stages: {}\n".format(len(self.stages))
@@ -261,6 +262,7 @@ class Task:
         indent += 1
         pfx = "\t" * indent
         s += pfx + "Started at: {}\n".format(datetime.fromtimestamp(self.launch_time / 1000))
+        s += pfx + "Ended at: {}\n".format(datetime.fromtimestamp(self.finish_time / 1000))
         s += pfx + "Run time: {}ms\n".format(int(self.finish_time or 0) - int(self.launch_time or 0))
         assert self.finish_time is not None
         assert self.launch_time is not None
