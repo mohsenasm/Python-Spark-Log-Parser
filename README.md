@@ -27,3 +27,4 @@ Then reports and stages DAGs will be stored in the `output` directory.
 ## Reference
 - https://github.com/kayousterhout/trace-analysis
 - https://github.com/DistributedSystemsGroup/SparkEvents
+- based on https://github.com/xiandong79/Spark-Log-Parser
