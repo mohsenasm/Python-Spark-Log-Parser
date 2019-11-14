@@ -243,3 +243,22 @@ class LogParser:
                     dag.edge(str(parent), str(s.stage_id))
 
         dag.render(filename, view=view)
+
+    def save_plot_of_rdds_dag(self, filename, view=False):
+        dag = Digraph()
+
+        for j in self.jobs.values():
+            for s in j.stages:
+                for r in s.RDDs:
+                    assert type(r.rdd_id) == int
+                    dag.node(str(r.rdd_id), f"{r.name} {r.rdd_id} (j={j.job_id}, s={s.stage_id})")
+
+        for j in self.jobs.values():
+            for s in j.stages:
+                for r in s.RDDs:
+                    for parent in r.parent_ids:
+                        assert type(parent) == int
+                        assert type(r.rdd_id) == int
+                        dag.edge(str(parent), str(r.rdd_id))
+
+        dag.render(filename, view=view)

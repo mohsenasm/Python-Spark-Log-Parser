@@ -32,7 +32,8 @@ def parse_application_log(file_path, all_apps, save=True, analyse=False):
         report = log_parser.generate_report()
         with open(os.path.expanduser(f"output/report_{safe_name}"), "w") as report_file:
             report_file.write(report)
-        log_parser.save_plot_of_stages_dag(f"output/dag_{safe_name}")
+        log_parser.save_plot_of_stages_dag(f"output/stages_dag_{safe_name}")
+        log_parser.save_plot_of_rdds_dag(f"output/RDDs_dag_{safe_name}")
         print(f"Log processing of application '{safe_name}' completed.")
 
 
