@@ -2,6 +2,7 @@ import os
 import sys
 import glob
 import re
+import json
 from collections import defaultdict
 from slugify import slugify
 
@@ -13,7 +14,7 @@ def parse_application_log(file_path, all_apps, save=True, analyse=False):
     log_parser = LogParser(file_path)
     try:
         log_parser.process()
-    except KeyError as e:
+    except (KeyError, json.decoder.JSONDecodeError) as e:
         name = None
         try:
             name = log_parser.process_name_only()
@@ -28,12 +29,12 @@ def parse_application_log(file_path, all_apps, save=True, analyse=False):
         safe_name = file_path.split("/")[-1]
 
     if save:
-        os.makedirs("output", exist_ok=True)
+        os.makedirs("parser_output", exist_ok=True)
         report = log_parser.generate_report()
-        with open(os.path.expanduser(f"output/report_{safe_name}"), "w") as report_file:
+        with open(os.path.expanduser(f"parser_output/{safe_name}_report"), "w") as report_file:
             report_file.write(report)
-        log_parser.save_plot_of_stages_dag(f"output/stages_dag_{safe_name}")
-        log_parser.save_plot_of_rdds_dag(f"output/RDDs_dag_{safe_name}")
+        log_parser.save_plot_of_stages_dag(f"parser_output/{safe_name}_stages_dag")
+        log_parser.save_plot_of_rdds_dag(f"parser_output/{safe_name}_RDDs_dag")
         print(f"Log processing of application '{safe_name}' completed.")
 
 
@@ -67,4 +68,3 @@ if __name__ == "__main__":
         # apps = parse_application_log_from_directory(os.path.join(sys.argv[1]))
         # plot_all_stages(apps[26], "query_26")
         # plot_all_stages(apps[52], "query_52")
-
