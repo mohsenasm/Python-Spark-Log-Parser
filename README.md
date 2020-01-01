@@ -33,6 +33,10 @@ alias spark-parser='docker run -ti --rm -v `pwd`:/files mohsenasm/python-spark-l
 spark-parser spark-history-directory
 ```
 
+Then, for fixing the permission issue, use this command:
+    sudo chown -R $USER:$USER parser_output/
+
 ## Reference
 - https://github.com/kayousterhout/trace-analysis
 - https://github.com/DistributedSystemsGroup/SparkEvents
+- based on https://github.com/xiandong79/Spark-Log-Parser
