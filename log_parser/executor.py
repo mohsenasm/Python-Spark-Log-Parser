@@ -43,6 +43,9 @@ class Executor:
         for t in self.tasks:
             runtimes.append(int(t.finish_time or 0) - int(t.launch_time or 0))
         runtimes = array(runtimes)
+        # if len(runtimes) == 0:
+        #     print("empty task runtimes for executor")
+        #     return 0, 0, 0, 0
         return runtimes.mean(), runtimes.std(), runtimes.min(), runtimes.max()
 
     def report(self, indent):

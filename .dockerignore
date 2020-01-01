@@ -1,0 +1,6 @@
+.git/
+.DS_Store
+.idea/
+__pycache__/
+log_example/
+output/

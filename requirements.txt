@@ -2,3 +2,4 @@ numpy
 graphviz
 python-slugify
 sklearn
+matplotlib
