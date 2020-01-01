@@ -1,0 +1,12 @@
+sudo: required
+
+services:
+  - docker
+
+branches:
+  only:
+    - nothing
+    # - master
+
+script:
+  - docker login -u mohsenasm -p $DOCKER_PASSWORD && docker build -t mohsenasm/python-spark-log-parser . && docker push mohsenasm/python-spark-log-parser

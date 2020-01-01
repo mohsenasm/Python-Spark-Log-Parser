@@ -16,7 +16,7 @@ def get_json(line):
 
 
 class LogParser:
-    def __init__(self, filename):
+    def __init__(self, filename, is_logging_enable=False):
         self.filename = filename
         self.parsed_data = {}  # empty dicts.
         self.block_managers = []  # empty lists.
@@ -24,6 +24,8 @@ class LogParser:
         self.executors = {}
         self.jobs = {}
         self.tasks = {}
+
+        self.is_logging_enable = is_logging_enable
 
     def do_SparkListenerLogStart(self, data):
         self.parsed_data["spark_version"] = data["Spark Version"]
@@ -90,6 +92,15 @@ class LogParser:
         job_id = data["Job ID"]
         self.jobs[job_id].complete(data)
 
+    def process_name_only(self):
+        with open(self.filename, "r") as log_file:
+            for line in log_file:
+                json_data = get_json(line)
+                event_type = json_data["Event"]
+
+                if event_type == "SparkListenerEnvironmentUpdate":
+                    self.do_SparkListenerEnvironmentUpdate(json_data)
+
     def process(self):
         with open(self.filename, "r") as log_file:
             unsupported_event_types = set()
@@ -131,7 +142,7 @@ class LogParser:
                     # print("WARNING: unknown event type: " + event_type)
                     unsupported_event_types.add(event_type)
 
-            if len(unsupported_event_types) > 0:
+            if len(unsupported_event_types) > 0 and self.is_logging_enable:
                 print("WARNING: unknown event types:\n\t{}".format("\n\t".join(unsupported_event_types)))
 
         # Link block managers and executors
@@ -222,7 +233,7 @@ class LogParser:
         for j in self.jobs.values():
             for s in j.stages:
                 assert type(s.stage_id) == int
-                dag.node(str(s.stage_id), str(s.stage_id))
+                dag.node(str(s.stage_id), f"{s.stage_id} ({s.get_completion_time()}ms, j={j.job_id})")
 
         for j in self.jobs.values():
             for s in j.stages:
@@ -230,5 +241,24 @@ class LogParser:
                     assert type(parent) == int
                     assert type(s.stage_id) == int
                     dag.edge(str(parent), str(s.stage_id))
+
+        dag.render(filename, view=view)
+
+    def save_plot_of_rdds_dag(self, filename, view=False):
+        dag = Digraph()
+
+        for j in self.jobs.values():
+            for s in j.stages:
+                for r in s.RDDs:
+                    assert type(r.rdd_id) == int
+                    dag.node(str(r.rdd_id), f"{r.name} {r.rdd_id} (j={j.job_id}, s={s.stage_id})")
+
+        for j in self.jobs.values():
+            for s in j.stages:
+                for r in s.RDDs:
+                    for parent in r.parent_ids:
+                        assert type(parent) == int
+                        assert type(r.rdd_id) == int
+                        dag.edge(str(parent), str(r.rdd_id))
 
         dag.render(filename, view=view)
