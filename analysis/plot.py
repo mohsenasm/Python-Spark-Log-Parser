@@ -12,6 +12,7 @@ from sklearn.linear_model import LinearRegression
 min_threshold_on_max_stage_time = 1000 # ms
 number_of_data_for_learn = 4
 min_scale_for_use = 5
+only_analyse_bigest_job = True
 
 def plot_all_stages(dict_of_apps_for_different_scales, name_prefix=""):
     app_dict = dict_of_apps_for_different_scales
@@ -19,7 +20,11 @@ def plot_all_stages(dict_of_apps_for_different_scales, name_prefix=""):
 
     for scale in app_dict:
         if scale >= min_scale_for_use:
+            max_job_runtime = max(map(lambda x: x.get_runtime(), app_dict[scale].jobs.values()))
             for job in app_dict[scale].jobs.values():
+                if only_analyse_bigest_job:
+                    if job.get_runtime() < max_job_runtime:
+                        continue
                 for stage in job.stages:
                     stages_times[stage.stage_id][scale] = stage.get_completion_time()
 
@@ -27,10 +32,10 @@ def plot_all_stages(dict_of_apps_for_different_scales, name_prefix=""):
         if max(stages_times[stage_id].values()) < min_threshold_on_max_stage_time:
             stages_times.pop(stage_id)
 
-    cols = 3
+    cols = 2
     rows = int(math.ceil(len(stages_times) / cols))
     gs = gridspec.GridSpec(rows, cols)
-    fig = plt.figure()
+    fig = plt.figure(figsize=(10, 5))
 
     errors, abs_errors, sum_actual = 0, 0, 0
 
@@ -72,7 +77,6 @@ def plot_all_stages(dict_of_apps_for_different_scales, name_prefix=""):
 
         ax.set_title(f"stage_{stage_id}")
 
-    fig.suptitle(name_prefix + f" (errors={errors:.2f}, abs_errors={abs_errors:.2f}, sum_actual={sum_actual})")
+    # fig.suptitle(name_prefix + f" (errors={errors:.2f}, abs_errors={abs_errors:.2f}, sum_actual={sum_actual})")
     fig.tight_layout()
-    plt.show()
-
+    plt.savefig(f"parser_output/_{name_prefix}_stages_analysis.pdf")

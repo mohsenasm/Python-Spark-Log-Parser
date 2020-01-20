@@ -56,7 +56,7 @@ def parse_application_log_from_directory(directory):
     apps = defaultdict(dict)
 
     for file in files:
-        parse_application_log(file, apps, save=True, analyse=False)
+        parse_application_log(file, apps, save=True, analyse=True)
 
     return apps
 
@@ -64,7 +64,11 @@ if __name__ == "__main__":
     if len(sys.argv) < 1:
         print("Usage: python3 <main.py> <log_dir>")
     else:
-        parse_application_log_from_directory(os.path.join(sys.argv[1]))
-        # apps = parse_application_log_from_directory(os.path.join(sys.argv[1]))
-        # plot_all_stages(apps[26], "query_26")
-        # plot_all_stages(apps[52], "query_52")
+        # parse_application_log_from_directory(os.path.join(sys.argv[1]))
+        apps = parse_application_log_from_directory(os.path.join(sys.argv[1]))
+        plot_all_stages(apps[5], "query05")
+        plot_all_stages(apps[19], "query19")
+        plot_all_stages(apps[21], "query21")
+        plot_all_stages(apps[26], "query26")
+        plot_all_stages(apps[40], "query40")
+        plot_all_stages(apps[52], "query52")

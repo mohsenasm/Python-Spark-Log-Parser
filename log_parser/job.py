@@ -63,6 +63,9 @@ class Job:
             # self.stages.append(Stage(stage_data))
         return s
 
+    def get_runtime(self):
+        return int(self.end_time or 0) - int(self.submission_time)
+
 
 class Stage:
     def __init__(self, stage_data):
