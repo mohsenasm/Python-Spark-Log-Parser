@@ -1,9 +1,5 @@
 # Spark-Log-Parser
 
-## Disclaimer
-
-This is a work-in-progress project. (WIP)
-
 ## Setup
 
 For Debian based OS (like Ubuntu):
